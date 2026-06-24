@@ -1,0 +1,60 @@
+# --- Swift Package Manager ---
+.build/
+.swiftpm/
+.swiftpm-xcode/
+Package.resolved
+Packages/
+*.xcodeproj
+*.xcworkspace
+xcuserdata/
+DerivedData/
+
+# --- Xcode ---
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# --- Build / release artifacts ---
+build/
+dist/
+*.o
+*.a
+*.dylib
+*.so
+*.lock
+*.xcarchive
+
+# --- Secrets / signing (never commit) ---
+*.p12
+*.cer
+*.key
+*.mobileprovision
+*.provisionprofile
+AuthKey_*.p8
+.env
+.env.*
+!.env.example
+
+# --- Editor / IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Logs ---
+*.log
+logs/
