@@ -19,7 +19,10 @@
 #   NOTARY_APPLE_ID          Apple ID for notarization (alternative to the profile).
 #   NOTARY_TEAM_ID           Developer Team ID (with NOTARY_APPLE_ID).
 #   NOTARY_PASSWORD          App-specific password (with NOTARY_APPLE_ID).
-#   VERSION                  Override the version string (default: Info.plist CFBundleShortVersionString).
+#   VERSION                  Override the marketing version (default: Info.plist CFBundleShortVersionString).
+#                            Stamped into the bundle as CFBundleShortVersionString.
+#   BUILD                    Override the build number (default: Info.plist CFBundleVersion).
+#                            Stamped into the bundle as CFBundleVersion; should increase per build.
 #   SKIP_TESTS               Set to 1 to skip `swift test`.
 #
 set -euo pipefail
@@ -36,6 +39,7 @@ ENTITLEMENTS="$ROOT/Resources/Entitlements.plist"
 ICON="$ROOT/Resources/AppIcon.icns"
 
 VERSION="${VERSION:-$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' "$ROOT/Resources/Info.plist")}"
+BUILD="${BUILD:-$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' "$ROOT/Resources/Info.plist")}"
 DMG="$DIST/$APP_NAME-$VERSION.dmg"
 ZIP="$DIST/$APP_NAME-$VERSION.zip"
 
@@ -80,6 +84,9 @@ rm -rf "$DIST"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$BIN" "$APP/Contents/MacOS/$EXECUTABLE"
 cp "$ROOT/Resources/Info.plist" "$APP/Contents/Info.plist"
+# Stamp the version/build into the bundle (the source Info.plist stays untouched).
+/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" "$APP/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD" "$APP/Contents/Info.plist"
 if [[ -f "$ICON" ]]; then
     cp "$ICON" "$APP/Contents/Resources/AppIcon.icns"
 else

@@ -22,11 +22,12 @@ cd MyApp
 Scripts/rename.sh "MyApp" "com.myapp"      # rebrand every target, module & bundle id
 swift build                                # build all targets
 swift test                                 # run tests
-swift run AppTemplate                      # launch (name updates after rename)
+swift run MyApp                            # launch (the executable is named after your app)
 xed .                                      # open in Xcode
 ```
 
-After `rename.sh`, the executable is named after your app and `swift run <YourApp>` launches it.
+After `rename.sh`, the executable is named after your app and `swift run <YourApp>` launches it
+(before rebranding it is `swift run AppTemplate`).
 
 ### AI-guided finalization
 
@@ -64,15 +65,18 @@ and [Claude Code](CLAUDE.md); the canonical workflow is in
 AppleFactory/
 ├── Package.swift                # SPM manifest (Swift 6, macOS 14+)
 ├── README.md  CONTRIBUTING.md  PRIVACY.md  SECURITY.md  AGENTS.md
+├── CLAUDE.md                    # AI finalize entry point (Claude Code); see also .opencode/ .cursor/
 ├── LICENSE  NOTICE              # Apache 2.0 + attribution
 ├── .gitignore
 ├── .github/                     # CI workflows, issue/PR templates, dependabot
 │   ├── workflows/build.yml      #   build + test + arm64-only verify
 │   ├── workflows/release.yml    #   sign + notarize + draft GitHub release (opt-in)
 │   └── ISSUE_TEMPLATE/  PULL_REQUEST_TEMPLATE.md  dependabot.yml
+├── .opencode/  .cursor/         # per-tool finalize entry points (point back to docs/FINALIZE.md)
 ├── Scripts/
-│   ├── release.sh               # build → assemble .app → sign → notarize → dmg/zip + checksums
-│   └── rename.sh                # rebrand the template placeholders to your app name
+│   ├── rename.sh                # rebrand the template placeholders to your app name
+│   ├── finalize.sh              # post-rename: repo URL, category, copyright, sandbox
+│   └── release.sh               # build → assemble .app → sign → notarize → dmg/zip + checksums
 ├── Resources/
 │   ├── Info.plist               # app bundle metadata
 │   ├── Entitlements.plist       # hardened-runtime entitlements (non-sandboxed direct distribution)
@@ -92,7 +96,8 @@ AppleFactory/
 └── docs/
     ├── ARCHITECTURE.md          # layering + concurrency model
     ├── RELEASING.md             # signing, notarization, CI release setup
-    └── GETTING_STARTED.md       # build, run, test, open in Xcode
+    ├── GETTING_STARTED.md       # build, run, test, open in Xcode
+    └── FINALIZE.md              # canonical AI-guided rebrand/finalize workflow
 ```
 
 ## Rebranding the template

@@ -63,8 +63,10 @@ spctl --assess --type execute -vv dist/AppTemplate.app   # should say: accepted,
 xcrun stapler validate dist/AppTemplate-<version>.dmg
 ```
 
-Useful env vars: `VERSION` (override the version string), `SKIP_TESTS=1` (skip `swift test`), and
-`NOTARY_APPLE_ID` / `NOTARY_TEAM_ID` / `NOTARY_PASSWORD` instead of the keychain profile.
+Useful env vars: `VERSION` (marketing version → `CFBundleShortVersionString`), `BUILD` (build
+number → `CFBundleVersion`), `SKIP_TESTS=1` (skip `swift test`), and `NOTARY_APPLE_ID` /
+`NOTARY_TEAM_ID` / `NOTARY_PASSWORD` instead of the keychain profile. `VERSION`/`BUILD` are stamped
+into the bundle's `Info.plist`; the source `Info.plist` is left untouched.
 
 ## CI release (GitHub Actions)
 
@@ -83,10 +85,12 @@ GitHub release with the `.dmg` / `.zip` and their checksums. Signing is **opt-in
    | `NOTARY_PASSWORD` | App-specific password |
 3. Cut a release:
    ```bash
-   # bump Resources/Info.plist (CFBundleShortVersionString + CFBundleVersion) first
    git tag v0.1.0
    git push origin v0.1.0
    ```
+   CI derives the version from the tag: `CFBundleShortVersionString` becomes the tag minus its
+   leading `v` (so `v0.1.0` → `0.1.0`), and `CFBundleVersion` becomes the commit count (a monotonic
+   build number). No manual `Info.plist` bump is needed for tagged releases.
 4. Review the draft release the workflow creates, then publish it.
 
 Without `SIGNING_ENABLED=true`, the workflow still runs and produces an **ad-hoc** `.dmg`/`.zip`
@@ -94,8 +98,12 @@ Without `SIGNING_ENABLED=true`, the workflow still runs and produces an **ad-hoc
 
 ## Versioning
 
-Bump `CFBundleShortVersionString` (marketing version, e.g. `0.2.0`) and `CFBundleVersion` (build
-number) in [`Resources/Info.plist`](../Resources/Info.plist), then tag `v<version>` to match.
+For **CI releases**, just tag `v<version>` — the workflow stamps the version (from the tag) and
+build number (commit count) into the bundle automatically (see the CI section above).
+
+For **local release builds**, the version defaults to `CFBundleShortVersionString` /
+`CFBundleVersion` in [`Resources/Info.plist`](../Resources/Info.plist); override per build with the
+`VERSION` / `BUILD` env vars. Bump the `Info.plist` values when you want a new local default.
 
 ## App Store instead of direct distribution
 

@@ -6,7 +6,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // a regular activation policy, so the window can launch hidden behind other apps. Force a
         // regular, foreground app and bring the window forward.
         NSApp.setActivationPolicy(.regular)
-        NSApp.activate(ignoringOtherApps: true)
+        NSApp.activate()
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

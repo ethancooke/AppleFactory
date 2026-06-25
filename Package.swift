@@ -7,6 +7,16 @@
 
 import PackageDescription
 
+let librarySwiftSettings: [SwiftSetting] = [
+    .swiftLanguageMode(.v6)
+]
+
+// The executable entry uses @main (not a main.swift file), so it must be parsed as a library.
+let executableSwiftSettings: [SwiftSetting] = [
+    .swiftLanguageMode(.v6),
+    .unsafeFlags(["-parse-as-library"])
+]
+
 let package = Package(
     name: "AppTemplate",
     platforms: [
@@ -38,13 +48,3 @@ let package = Package(
         )
     ]
 )
-
-let librarySwiftSettings: [SwiftSetting] = [
-    .swiftLanguageMode(.v6)
-]
-
-// The executable entry uses @main (not a main.swift file), so it must be parsed as a library.
-let executableSwiftSettings: [SwiftSetting] = [
-    .swiftLanguageMode(.v6),
-    .unsafeFlags(["-parse-as-library"])
-]

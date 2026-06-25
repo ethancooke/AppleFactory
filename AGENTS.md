@@ -46,7 +46,8 @@ mode (`swift build`). Always ensure `swift build` and `swift test` pass before f
 - `Sources/AppTemplateCore` — UI-agnostic models + actor-isolated services (no `SwiftUI`/`AppKit`).
 - `Tests/AppTemplateCoreTests` — Swift Testing suites for the core library.
 - `Resources/` — `Info.plist`, `Entitlements.plist`, app icon for the hand-assembled `.app`.
-- `Scripts/` — `release.sh` (distributable build) and `rename.sh` (rebrand the template).
+- `Scripts/` — `rename.sh` (rebrand the template), `finalize.sh` (post-rename repo URL/category/
+  copyright/sandbox), and `release.sh` (distributable build).
 - `docs/` — architecture, releasing, getting started.
 
 ## Distribution

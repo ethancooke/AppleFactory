@@ -19,6 +19,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history so the build number (commit count) is accurate
+
+      # Cache only the dependency clones, NOT .build — release artifacts compile clean so a
+      # stale incremental object can never slip into a signed/notarized build.
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.swiftpm
+          key: spm-deps-${{ runner.os }}-${{ hashFiles('Package.resolved', 'Package.swift') }}
+          restore-keys: |
+            spm-deps-${{ runner.os }}-
+
+      - name: Derive version from tag
+        run: |
+          set -euo pipefail
+          # On a v* tag, use the tag (minus the leading "v") as the marketing version so the
+          # artifacts match the release. Off a tag (workflow_dispatch), fall back to Info.plist.
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            echo "VERSION=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_ENV"
+          fi
+          # Monotonic build number from commit count.
+          echo "BUILD=$(git rev-list --count HEAD)" >> "$GITHUB_ENV"
 
       - name: Toolchain
         run: |
@@ -53,6 +76,8 @@ jobs:
       - name: Build & package
         env:
           SIGN_IDENTITY: ${{ env.SIGN_IDENTITY }}
+          VERSION: ${{ env.VERSION }}
+          BUILD: ${{ env.BUILD }}
           NOTARY_APPLE_ID: ${{ secrets.NOTARY_APPLE_ID }}
           NOTARY_TEAM_ID: ${{ secrets.NOTARY_TEAM_ID }}
           NOTARY_PASSWORD: ${{ secrets.NOTARY_PASSWORD }}

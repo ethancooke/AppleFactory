@@ -10,6 +10,14 @@ struct GreetingServiceTests {
         let result = await service.greeting()
         #expect(!result.message.isEmpty)
     }
+
+    @Test("Reflects an updated message")
+    func update() async {
+        let service = GreetingService()
+        await service.update(message: "hi there")
+        let result = await service.greeting()
+        #expect(result.message == "hi there")
+    }
 }
 
 @Suite("Greeting")
