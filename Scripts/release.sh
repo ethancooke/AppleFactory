@@ -92,6 +92,23 @@ if [[ -f "$ICON" ]]; then
 else
     echo "NOTE: $ICON not found — the bundle will have no app icon."
 fi
+
+# Copy any SwiftPM resource bundles into the .app. When a target declares resources
+# (.process/.copy in Package.swift), `swift build` emits "<Package>_<Target>.bundle" next to
+# the binary; code reaches them via Bundle.module, which resolves them inside Contents/Resources.
+# Without this, a release build silently ships without its resources.
+shopt -s nullglob
+BUNDLES=("$BIN_DIR"/*.bundle)
+shopt -u nullglob
+if (( ${#BUNDLES[@]} )); then
+    log "Copying ${#BUNDLES[@]} resource bundle(s) into the app"
+    for b in "${BUNDLES[@]}"; do
+        cp -R "$b" "$APP/Contents/Resources/"
+    done
+    # NOTE: SwiftPM resource bundles normally contain only assets, so the app's signature covers
+    # them. A bundle that contains executable code must be code-signed separately, before the app.
+fi
+
 xattr -cr "$APP"
 
 # --- Sign ------------------------------------------------------------------------------------
