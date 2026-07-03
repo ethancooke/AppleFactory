@@ -7,7 +7,11 @@ final class AppViewModel {
     var greeting: Greeting?
     var count: Int = 0
 
-    private let service = GreetingService()
+    private let service: GreetingService
+
+    init(service: GreetingService = GreetingService()) {
+        self.service = service
+    }
 
     func loadGreeting() async {
         greeting = await service.greeting()

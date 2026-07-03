@@ -45,6 +45,11 @@ let package = Package(
             name: "AppTemplateCoreTests",
             dependencies: ["AppTemplateCore"],
             swiftSettings: librarySwiftSettings
+        ),
+        .testTarget(
+            name: "AppTemplateTests",
+            dependencies: ["AppTemplate"],
+            swiftSettings: librarySwiftSettings
         )
     ]
 )
