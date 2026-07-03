@@ -22,3 +22,8 @@ this and proceed with normal development.
 
 See [`AGENTS.md`](AGENTS.md) for build/test commands, Swift 6 strict-concurrency conventions, the
 UI-agnostic core rule, and the layout cheat sheet.
+
+When making product/design decisions on an app built from this template — anything touching
+privacy, permissions, networking, data persistence, or destructive actions — follow the compass in
+[`docs/PRINCIPLES.md`](docs/PRINCIPLES.md) (privacy-first, offline-by-default, least privilege,
+safe-by-default). Deviate from a default only deliberately, minimally, and with disclosed user consent.
