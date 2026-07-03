@@ -127,16 +127,17 @@ The scripts handle mechanical find-replace. The AI handles these targeted edits:
 1. **README.md** — replace the template description (the opening under the H1) with the user's
    one-line description (Q3). Update the H1 to the app name. Keep the build/repo-layout sections.
 2. **AGENTS.md** — update the "Project" section to describe the real app in one sentence (Q3).
-3. **Resources/Info.plist** — for each permission (Q6), add the `NS*UsageDescription` key with the
-   user's one-sentence reason. Add them inside the top-level `<dict>`.
-4. **Resources/Entitlements.plist** — for each permission (Q6), add the entitlement key as `<true/>`.
-   If App Store (Q5), `finalize.sh` already added `com.apple.security.app-sandbox`; otherwise leave
-   the dict minimal. **Do not add XML comments** — `codesign`'s entitlements parser rejects them.
-5. **PRIVACY.md** — if any permission collects data or makes network connections, update the file to
+3. **Permissions (Q6)** — for each chosen permission, run
+   `Scripts/add-permission.sh <permission> "<reason>"` (`Scripts/add-permission.sh --list` shows the
+   slugs). It writes the `NS*UsageDescription` into `Resources/Info.plist` and the matching
+   entitlement into `Resources/Entitlements.plist` from a baked-in table, and refuses to touch a
+   commented entitlements file (`codesign` rejects XML comments there). Pass the user's reason
+   verbatim — do not paraphrase. Don't hand-edit the plists for this; the script is the source of truth.
+4. **PRIVACY.md** — if any permission collects data or makes network connections, update the file to
    disclose it honestly. If not, leave the "collects nothing" text and just rename the app.
-6. **SECURITY.md** — replace remaining `ethancooke/AppleFactory` references (finalize.sh handles the
+5. **SECURITY.md** — replace remaining `ethancooke/AppleFactory` references (finalize.sh handles the
    ones it can find; double-check the advisory-reporting URL).
-7. If the user said **delete sample code** (Q9): remove `Sources/<App>Core/Models/Greeting.swift`,
+6. If the user said **delete sample code** (Q9): remove `Sources/<App>Core/Models/Greeting.swift`,
    `Sources/<App>Core/Services/GreetingService.swift`, and the test file
    `Tests/<App>CoreTests/GreetingServiceTests.swift`; update `ContentView` and the view model to not
    reference them. (If they keep it, rename.sh already rebranded everything.)
@@ -146,10 +147,11 @@ The scripts handle mechanical find-replace. The AI handles these targeted edits:
 ## Step 4 — Verify
 
 ```bash
-swift build          # must compile clean under Swift 6 strict concurrency
-swift build -c release
-swift test           # all suites pass
+Scripts/verify.sh    # debug build + release build + tests; prints only failures
 ```
+
+(`Scripts/verify.sh` wraps `swift build` / `swift build -c release` / `swift test` and stays quiet
+on success, so you read a short summary instead of full build logs. `--quick` skips the release build.)
 
 If the sample code was deleted, the test file is gone too, so `swift test` should still pass (or
 report "no tests" — fine).
