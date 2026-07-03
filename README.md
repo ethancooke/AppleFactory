@@ -23,30 +23,41 @@ screenshot or GIF of your real app here:_
 
 ---
 
-## Quick start
+## Start your own app
+
+Clone the template, then run one script — it rebrands everything, verifies the build, starts a
+fresh git history, and (optionally) creates and pushes to **your** GitHub repo. It never pushes back
+to this template.
 
 ```bash
 git clone https://github.com/ethancooke/AppleFactory.git MyApp
 cd MyApp
-Scripts/rename.sh "MyApp" "com.myapp"      # rebrand every target, module & bundle id
-swift build                                # build all targets
-swift test                                 # run tests
-swift run MyApp                            # launch (the executable is named after your app)
-xed .                                      # open in Xcode
+Scripts/setup.sh                           # asks a few questions, then does the rest
 ```
 
-After `rename.sh`, the executable is named after your app and `swift run <YourApp>` launches it
-(before rebranding it is `swift run AppTemplate`).
+Full walkthrough (prerequisites, what each question means, the manual fallback):
+**[`INSTRUCTIONS.md`](INSTRUCTIONS.md)**.
 
-### AI-guided finalization
+### Prefer an AI to do it?
 
-This template ships a cross-tool "finalize" skill that asks you a few questions (app name, bundle
-ID, description, App Store category, distribution channel, permissions, copyright, repo URL) and
-then runs the scripts + makes the remaining edits for you. It triggers automatically in
-[opencode](.opencode/skills/finalize-template/SKILL.md), [Cursor](.cursor/rules/finalize-template.mdc),
-and [Claude Code](CLAUDE.md); the canonical workflow is in
-[`docs/FINALIZE.md`](docs/FINALIZE.md). Just ask the AI to "set up this template" or
-"finalize the clone" right after cloning.
+Open the freshly cloned folder in Claude Code, Cursor, or opencode and say *"set up this template."*
+The bundled finalize skill asks the same questions and runs the same scripts — it triggers
+automatically in [opencode](.opencode/skills/finalize-template/SKILL.md),
+[Cursor](.cursor/rules/finalize-template.mdc), and [Claude Code](CLAUDE.md); the canonical workflow
+is [`docs/FINALIZE.md`](docs/FINALIZE.md).
+
+### Or do it by hand
+
+```bash
+Scripts/rename.sh "MyApp" "com.myapp"      # rebrand every target, module & bundle id
+Scripts/finalize.sh --app "MyApp" --repo "you/MyApp" \
+  --category "public.app-category.utilities" --distribution direct
+swift build && swift test                  # verify
+rm -rf .git && git init                    # fresh history, then add your own remote + push
+```
+
+After rebranding, the executable is named after your app: `swift run MyApp` (before rebranding it is
+`swift run AppTemplate`). Open in Xcode with `xed .`.
 
 ## What's baked in
 
@@ -76,7 +87,7 @@ and [Claude Code](CLAUDE.md); the canonical workflow is in
 ```
 AppleFactory/
 ├── Package.swift                # SPM manifest (Swift 6, macOS 14+)
-├── README.md  CONTRIBUTING.md  PRIVACY.md  SECURITY.md  AGENTS.md
+├── README.md  INSTRUCTIONS.md  CONTRIBUTING.md  PRIVACY.md  SECURITY.md  AGENTS.md
 ├── CLAUDE.md                    # AI finalize entry point (Claude Code); see also .opencode/ .cursor/
 ├── LICENSE  NOTICE              # Apache 2.0 + attribution
 ├── .gitignore  .editorconfig    # ignore rules + editor defaults
@@ -87,6 +98,7 @@ AppleFactory/
 │   └── ISSUE_TEMPLATE/  PULL_REQUEST_TEMPLATE.md  dependabot.yml  CODEOWNERS
 ├── .opencode/  .cursor/         # per-tool finalize entry points (point back to docs/FINALIZE.md)
 ├── Scripts/
+│   ├── setup.sh                 # one-command bootstrap: rebrand + verify + fresh git + push
 │   ├── rename.sh                # rebrand the template placeholders to your app name
 │   ├── finalize.sh              # post-rename: repo URL, category, copyright, sandbox
 │   ├── add-permission.sh        # add an NS*UsageDescription + entitlement from a baked-in table

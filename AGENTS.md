@@ -27,6 +27,7 @@ sample code, and build a real app on top.
 - Verify (build + release build + test, quiet): `Scripts/verify.sh` (`--quick` skips the release build)
 - Maintenance audit (deprecations, stale CI/actions, toolchain drift): `Scripts/check-updates.sh` (see [`docs/MAINTAINING.md`](docs/MAINTAINING.md))
 - Add a permission (Info.plist + entitlement, from a baked-in table): `Scripts/add-permission.sh <permission> "<reason>"` (`--list` shows slugs)
+- One-command bootstrap (rebrand + verify + fresh git + push): `Scripts/setup.sh` (see [`INSTRUCTIONS.md`](INSTRUCTIONS.md))
 - Rebrand the template: `Scripts/rename.sh "MyApp" "com.myapp"`
 - Smoke-test the rebrand (rename + finalize build clean in a temp copy): `Scripts/test-rename.sh`
 - Format Swift (optional, not a gate): `Scripts/format.sh` (`--lint` to check only)
@@ -57,7 +58,7 @@ before finishing a task.
 - `Tests/AppTemplateCoreTests` — Swift Testing suites for the core library.
 - `Tests/AppTemplateTests` — Swift Testing suites for the app target (e.g. the `@MainActor` view model).
 - `Resources/` — `Info.plist`, `Entitlements.plist`, app icon for the hand-assembled `.app`.
-- `Scripts/` — `rename.sh` (rebrand the template), `finalize.sh` (post-rename repo URL/category/
+- `Scripts/` — `setup.sh` (one-command bootstrap), `rename.sh` (rebrand the template), `finalize.sh` (post-rename repo URL/category/
   copyright/sandbox), `add-permission.sh` (Info.plist + entitlement from a table), `verify.sh`
   (quiet build+test gate), `test-rename.sh` (rebrand smoke test), `format.sh` (optional Swift
   formatting), `check-updates.sh` (maintenance audit), and `release.sh` (distributable build).
