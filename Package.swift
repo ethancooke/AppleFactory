@@ -14,7 +14,7 @@ let librarySwiftSettings: [SwiftSetting] = [
 // The executable entry uses @main (not a main.swift file), so it must be parsed as a library.
 let executableSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
-    .unsafeFlags(["-parse-as-library"])
+    .unsafeFlags(["-parse-as-library"]),
 ]
 
 let package = Package(
@@ -24,7 +24,7 @@ let package = Package(
     ],
     products: [
         .executable(name: "AppTemplate", targets: ["AppTemplate"]),
-        .library(name: "AppTemplateCore", targets: ["AppTemplateCore"])
+        .library(name: "AppTemplateCore", targets: ["AppTemplateCore"]),
     ],
     dependencies: [
         // Add SPM dependencies here, e.g.:
@@ -50,6 +50,6 @@ let package = Package(
             name: "AppTemplateTests",
             dependencies: ["AppTemplate"],
             swiftSettings: librarySwiftSettings
-        )
+        ),
     ]
 )

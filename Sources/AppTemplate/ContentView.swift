@@ -1,5 +1,5 @@
-import SwiftUI
 import AppTemplateCore
+import SwiftUI
 
 struct ContentView: View {
     @State private var viewModel = AppViewModel()

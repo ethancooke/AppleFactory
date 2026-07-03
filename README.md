@@ -14,6 +14,15 @@ contributing). It builds and ships nothing on its own; it's the starting line.
 
 ---
 
+## Screenshot
+
+_The sample app is a minimal greeting + counter window. After you finalize the template, drop a
+screenshot or GIF of your real app here:_
+
+<!-- ![MyApp](docs/screenshot.png) -->
+
+---
+
 ## Quick start
 
 ```bash
@@ -70,11 +79,12 @@ AppleFactory/
 ├── README.md  CONTRIBUTING.md  PRIVACY.md  SECURITY.md  AGENTS.md
 ├── CLAUDE.md                    # AI finalize entry point (Claude Code); see also .opencode/ .cursor/
 ├── LICENSE  NOTICE              # Apache 2.0 + attribution
-├── .gitignore
+├── .gitignore  .editorconfig    # ignore rules + editor defaults
+├── .swift-format                # swift-format config (optional formatting)
 ├── .github/                     # CI workflows, issue/PR templates, dependabot
 │   ├── workflows/build.yml      #   build + test + arm64-only verify
 │   ├── workflows/release.yml    #   sign + notarize + draft GitHub release (opt-in)
-│   └── ISSUE_TEMPLATE/  PULL_REQUEST_TEMPLATE.md  dependabot.yml
+│   └── ISSUE_TEMPLATE/  PULL_REQUEST_TEMPLATE.md  dependabot.yml  CODEOWNERS
 ├── .opencode/  .cursor/         # per-tool finalize entry points (point back to docs/FINALIZE.md)
 ├── Scripts/
 │   ├── rename.sh                # rebrand the template placeholders to your app name
@@ -82,6 +92,7 @@ AppleFactory/
 │   ├── add-permission.sh        # add an NS*UsageDescription + entitlement from a baked-in table
 │   ├── verify.sh                # quiet build + release build + test gate
 │   ├── test-rename.sh           # smoke test: rename + finalize build clean in a temp copy
+│   ├── format.sh                # optional Swift formatting (swift format; not a CI gate)
 │   ├── check-updates.sh         # maintenance audit: deprecations, stale CI/actions, toolchain drift
 │   └── release.sh               # build → assemble .app → sign → notarize → dmg/zip + checksums
 ├── Resources/
