@@ -62,6 +62,8 @@ log "Renaming directories"
 mv "Sources/$OLD_NAME"          "Sources/$NEW_NAME"
 mv "Sources/${OLD_NAME}Core"    "Sources/${NEW_NAME}Core"
 mv "Tests/${OLD_NAME}CoreTests" "Tests/${NEW_NAME}CoreTests"
+# App-target test dir is optional (a user may delete it); rename it only if present.
+[[ -d "Tests/${OLD_NAME}Tests" ]] && mv "Tests/${OLD_NAME}Tests" "Tests/${NEW_NAME}Tests"
 
 # --- 2. Rename files that contain the old name in their filename -----------------------------
 # Skip the AI-tool meta dirs (.opencode/.cursor/.claude) — their files reference the template's

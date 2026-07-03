@@ -63,3 +63,15 @@ jobs:
             exit 1
           fi
           echo "arm64-only: OK"
+
+  rebrand-smoke:
+    name: Rebrand smoke test (rename + finalize build clean)
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Rebrand a throwaway copy and build it
+        run: |
+          set -o pipefail
+          Scripts/test-rename.sh
