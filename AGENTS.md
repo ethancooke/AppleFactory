@@ -24,6 +24,9 @@ sample code, and build a real app on top.
 - Run all tests: `swift test`
 - Run a single suite: `swift test --filter AppTemplateCoreTests`
 - Open in Xcode: `xed .`
+- Verify (build + release build + test, quiet): `Scripts/verify.sh` (`--quick` skips the release build)
+- Maintenance audit (deprecations, stale CI/actions, toolchain drift): `Scripts/check-updates.sh` (see [`docs/MAINTAINING.md`](docs/MAINTAINING.md))
+- Add a permission (Info.plist + entitlement, from a baked-in table): `Scripts/add-permission.sh <permission> "<reason>"` (`--list` shows slugs)
 - Rebrand the template: `Scripts/rename.sh "MyApp" "com.myapp"`
 - Ad-hoc release build: `bash Scripts/release.sh`
 
@@ -39,6 +42,9 @@ mode (`swift build`). Always ensure `swift build` and `swift test` pass before f
 - **Keep the core UI-agnostic**: `AppTemplateCore` must not import `SwiftUI`/`AppKit`. UI lives only
   in the `AppTemplate` executable target.
 - Match the density and idiom of the surrounding code.
+- **Product/design decisions** (privacy, permissions, networking, persistence, destructive actions)
+  follow the compass in [`docs/PRINCIPLES.md`](docs/PRINCIPLES.md): privacy-first, offline-by-default,
+  least privilege, safe-by-default. Cross a default only deliberately, minimally, and with disclosed consent.
 
 ## Layout cheat sheet
 
@@ -47,8 +53,9 @@ mode (`swift build`). Always ensure `swift build` and `swift test` pass before f
 - `Tests/AppTemplateCoreTests` — Swift Testing suites for the core library.
 - `Resources/` — `Info.plist`, `Entitlements.plist`, app icon for the hand-assembled `.app`.
 - `Scripts/` — `rename.sh` (rebrand the template), `finalize.sh` (post-rename repo URL/category/
-  copyright/sandbox), and `release.sh` (distributable build).
-- `docs/` — architecture, releasing, getting started.
+  copyright/sandbox), `add-permission.sh` (Info.plist + entitlement from a table), `verify.sh`
+  (quiet build+test gate), `check-updates.sh` (maintenance audit), and `release.sh` (distributable build).
+- `docs/` — architecture, releasing, getting started, maintaining, principles (design compass).
 
 ## Distribution
 

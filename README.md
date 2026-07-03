@@ -56,8 +56,11 @@ and [Claude Code](CLAUDE.md); the canonical workflow is in
   (opt-in signing/notarization → draft GitHub release on a `v*` tag).
 - **Community files**: `LICENSE` (Apache 2.0), `NOTICE`, `CONTRIBUTING.md`, `PRIVACY.md`,
   `SECURITY.md`, `AGENTS.md`, issue/PR templates, and `dependabot.yml`.
+- **Design compass**: [`docs/PRINCIPLES.md`](docs/PRINCIPLES.md) — privacy-first, offline-by-default,
+  least-privilege, safe-by-default principles that guide how apps built on this template are designed.
 - **Docs**: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), [`docs/RELEASING.md`](docs/RELEASING.md),
-  [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md).
+  [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md), [`docs/MAINTAINING.md`](docs/MAINTAINING.md),
+  [`docs/PRINCIPLES.md`](docs/PRINCIPLES.md).
 
 ## Repository layout
 
@@ -76,6 +79,9 @@ AppleFactory/
 ├── Scripts/
 │   ├── rename.sh                # rebrand the template placeholders to your app name
 │   ├── finalize.sh              # post-rename: repo URL, category, copyright, sandbox
+│   ├── add-permission.sh        # add an NS*UsageDescription + entitlement from a baked-in table
+│   ├── verify.sh                # quiet build + release build + test gate
+│   ├── check-updates.sh         # maintenance audit: deprecations, stale CI/actions, toolchain drift
 │   └── release.sh               # build → assemble .app → sign → notarize → dmg/zip + checksums
 ├── Resources/
 │   ├── Info.plist               # app bundle metadata
@@ -97,7 +103,9 @@ AppleFactory/
     ├── ARCHITECTURE.md          # layering + concurrency model
     ├── RELEASING.md             # signing, notarization, CI release setup
     ├── GETTING_STARTED.md       # build, run, test, open in Xcode
-    └── FINALIZE.md              # canonical AI-guided rebrand/finalize workflow
+    ├── FINALIZE.md              # canonical AI-guided rebrand/finalize workflow
+    ├── MAINTAINING.md           # keeping the template current (toolchain, CI, deps, Apple guidance)
+    └── PRINCIPLES.md            # design compass: privacy-first, least privilege, safe-by-default
 ```
 
 ## Rebranding the template
