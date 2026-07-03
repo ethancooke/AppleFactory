@@ -28,6 +28,7 @@ sample code, and build a real app on top.
 - Maintenance audit (deprecations, stale CI/actions, toolchain drift): `Scripts/check-updates.sh` (see [`docs/MAINTAINING.md`](docs/MAINTAINING.md))
 - Add a permission (Info.plist + entitlement, from a baked-in table): `Scripts/add-permission.sh <permission> "<reason>"` (`--list` shows slugs)
 - Rebrand the template: `Scripts/rename.sh "MyApp" "com.myapp"`
+- Smoke-test the rebrand (rename + finalize build clean in a temp copy): `Scripts/test-rename.sh`
 - Ad-hoc release build: `bash Scripts/release.sh`
 
 There is no separate linter. Type/safety checking is the Swift 6 compiler in strict concurrency
@@ -51,10 +52,12 @@ mode (`swift build`). Always ensure `swift build` and `swift test` pass before f
 - `Sources/AppTemplate` — `@main` SwiftUI app + views + `@Observable` view model + app delegate.
 - `Sources/AppTemplateCore` — UI-agnostic models + actor-isolated services (no `SwiftUI`/`AppKit`).
 - `Tests/AppTemplateCoreTests` — Swift Testing suites for the core library.
+- `Tests/AppTemplateTests` — Swift Testing suites for the app target (e.g. the `@MainActor` view model).
 - `Resources/` — `Info.plist`, `Entitlements.plist`, app icon for the hand-assembled `.app`.
 - `Scripts/` — `rename.sh` (rebrand the template), `finalize.sh` (post-rename repo URL/category/
   copyright/sandbox), `add-permission.sh` (Info.plist + entitlement from a table), `verify.sh`
-  (quiet build+test gate), `check-updates.sh` (maintenance audit), and `release.sh` (distributable build).
+  (quiet build+test gate), `test-rename.sh` (rebrand smoke test), `check-updates.sh` (maintenance
+  audit), and `release.sh` (distributable build).
 - `docs/` — architecture, releasing, getting started, maintaining, principles (design compass).
 
 ## Distribution

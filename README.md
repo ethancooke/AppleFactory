@@ -81,6 +81,7 @@ AppleFactory/
 │   ├── finalize.sh              # post-rename: repo URL, category, copyright, sandbox
 │   ├── add-permission.sh        # add an NS*UsageDescription + entitlement from a baked-in table
 │   ├── verify.sh                # quiet build + release build + test gate
+│   ├── test-rename.sh           # smoke test: rename + finalize build clean in a temp copy
 │   ├── check-updates.sh         # maintenance audit: deprecations, stale CI/actions, toolchain drift
 │   └── release.sh               # build → assemble .app → sign → notarize → dmg/zip + checksums
 ├── Resources/
@@ -98,7 +99,8 @@ AppleFactory/
 │       ├── Models/              #   Sendable value-type models
 │       └── Services/            #   actor-isolated services
 ├── Tests/
-│   └── AppTemplateCoreTests/    # Swift Testing suites for the core library
+│   ├── AppTemplateCoreTests/    # Swift Testing suites for the core library
+│   └── AppTemplateTests/        # Swift Testing suites for the app target (view model)
 └── docs/
     ├── ARCHITECTURE.md          # layering + concurrency model
     ├── RELEASING.md             # signing, notarization, CI release setup
