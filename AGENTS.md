@@ -47,6 +47,9 @@ before finishing a task.
 - **Keep the core UI-agnostic**: `AppTemplateCore` must not import `SwiftUI`/`AppKit`. UI lives only
   in the `AppTemplate` executable target.
 - Match the density and idiom of the surrounding code.
+- **Adding a feature?** See [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md) for where things go, worked
+  recipes (model / service / screen / dependency / permission / test), the definition of done, and
+  the anti-patterns to avoid.
 - **Product/design decisions** (privacy, permissions, networking, persistence, destructive actions)
   follow the compass in [`docs/PRINCIPLES.md`](docs/PRINCIPLES.md): privacy-first, offline-by-default,
   least privilege, safe-by-default. Cross a default only deliberately, minimally, and with disclosed consent.
@@ -62,7 +65,7 @@ before finishing a task.
   copyright/sandbox), `add-permission.sh` (Info.plist + entitlement from a table), `verify.sh`
   (quiet build+test gate), `test-rename.sh` (rebrand smoke test), `format.sh` (optional Swift
   formatting), `check-updates.sh` (maintenance audit), and `release.sh` (distributable build).
-- `docs/` — architecture, releasing, getting started, maintaining, principles (design compass).
+- `docs/` — architecture, development (recipes), releasing, getting started, maintaining, principles (design compass).
 
 ## Distribution
 

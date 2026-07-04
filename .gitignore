@@ -57,6 +57,9 @@ AuthKey_*.p8
 *.swo
 *~
 
+# --- Claude Code: commit shared .claude/settings.json; ignore personal overrides ---
+.claude/settings.local.json
+
 # --- Logs ---
 *.log
 logs/

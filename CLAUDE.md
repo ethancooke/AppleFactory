@@ -21,7 +21,8 @@ this and proceed with normal development.
 ## Everyday commands & conventions
 
 See [`AGENTS.md`](AGENTS.md) for build/test commands, Swift 6 strict-concurrency conventions, the
-UI-agnostic core rule, and the layout cheat sheet.
+UI-agnostic core rule, and the layout cheat sheet. When adding features, follow the recipes and
+anti-patterns in [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md).
 
 When making product/design decisions on an app built from this template — anything touching
 privacy, permissions, networking, data persistence, or destructive actions — follow the compass in

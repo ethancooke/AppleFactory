@@ -78,9 +78,9 @@ After rebranding, the executable is named after your app: `swift run MyApp` (bef
   `SECURITY.md`, `AGENTS.md`, issue/PR templates, and `dependabot.yml`.
 - **Design compass**: [`docs/PRINCIPLES.md`](docs/PRINCIPLES.md) — privacy-first, offline-by-default,
   least-privilege, safe-by-default principles that guide how apps built on this template are designed.
-- **Docs**: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), [`docs/RELEASING.md`](docs/RELEASING.md),
-  [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md), [`docs/MAINTAINING.md`](docs/MAINTAINING.md),
-  [`docs/PRINCIPLES.md`](docs/PRINCIPLES.md).
+- **Docs**: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md),
+  [`docs/RELEASING.md`](docs/RELEASING.md), [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md),
+  [`docs/MAINTAINING.md`](docs/MAINTAINING.md), [`docs/PRINCIPLES.md`](docs/PRINCIPLES.md).
 
 ## Repository layout
 
@@ -126,6 +126,7 @@ AppleFactory/
 │   └── AppTemplateTests/        # Swift Testing suites for the app target (view model)
 └── docs/
     ├── ARCHITECTURE.md          # layering + concurrency model
+    ├── DEVELOPMENT.md           # recipes + anti-patterns for adding features
     ├── RELEASING.md             # signing, notarization, CI release setup
     ├── GETTING_STARTED.md       # build, run, test, open in Xcode
     ├── FINALIZE.md              # canonical AI-guided rebrand/finalize workflow
