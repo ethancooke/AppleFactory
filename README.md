@@ -96,6 +96,7 @@ AppleFactory/
 │   ├── workflows/build.yml      #   build + test + arm64-only verify
 │   ├── workflows/release.yml    #   sign + notarize + draft GitHub release (opt-in)
 │   └── ISSUE_TEMPLATE/  PULL_REQUEST_TEMPLATE.md  dependabot.yml  CODEOWNERS
+├── opencode.json  .claude/      # agent bash-permission allowlists (opencode / Claude Code)
 ├── .opencode/  .cursor/         # per-tool finalize entry points (point back to docs/FINALIZE.md)
 ├── Scripts/
 │   ├── setup.sh                 # one-command bootstrap: rebrand + verify + fresh git + push

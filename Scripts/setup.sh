@@ -132,8 +132,8 @@ if confirm "Remove the template scaffolding (rename/finalize/setup scripts, FINA
     rm -f Scripts/rename.sh Scripts/finalize.sh Scripts/setup.sh Scripts/test-rename.sh \
           docs/FINALIZE.md INSTRUCTIONS.md
     rm -rf .opencode .cursor
-    echo "  (Kept: the slimmed CLAUDE.md, .claude/ settings, add-permission.sh, verify.sh,"
-    echo "         check-updates.sh, format.sh, release.sh, and docs/.)"
+    echo "  (Kept: the slimmed CLAUDE.md, agent configs (.claude/, opencode.json), add-permission.sh,"
+    echo "         verify.sh, check-updates.sh, format.sh, release.sh, and docs/.)"
 fi
 
 # --- Optional: fresh git history -----------------------------------------------------------------
