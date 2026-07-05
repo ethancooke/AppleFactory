@@ -109,31 +109,17 @@ fi
 log "Verifying the rebranded project builds"
 Scripts/verify.sh --quick
 
-# --- Rewrite CLAUDE.md as ongoing project instructions -------------------------------------------
-# The template's CLAUDE.md is about finalizing a fresh clone; that's done now. Replace it with a
-# slim standing file so a future AI session on the app still has project instructions + pointers.
-log "Writing ongoing project instructions to CLAUDE.md"
-cat > CLAUDE.md <<CLAUDE
-# CLAUDE.md
-
-Guidance for Claude Code working on **$APP**.
-
-- Build/test commands, Swift 6 conventions, and the layout cheat sheet: [AGENTS.md](AGENTS.md).
-- How to add features (recipes + anti-patterns): [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
-- Product/design decisions (privacy-first, least privilege, safe-by-default): [docs/PRINCIPLES.md](docs/PRINCIPLES.md).
-
-Run \`Scripts/verify.sh\` (build + release build + tests) before finishing a task.
-CLAUDE
-
 # --- Optional: remove template scaffolding -------------------------------------------------------
+# Scripts/strip-scaffolding.sh is the single source of truth for cleanup: it slims CLAUDE.md, cleans
+# the Package.swift header, scrubs the agent configs, and removes the finalize-only files (including
+# this script). The rebrand smoke test runs the same routine, so it can't silently break.
 echo
-if confirm "Remove the template scaffolding (rename/finalize/setup scripts, FINALIZE.md, AI finalize entry points)?"; then
-    log "Removing scaffolding"
-    rm -f Scripts/rename.sh Scripts/finalize.sh Scripts/setup.sh Scripts/test-rename.sh \
-          docs/FINALIZE.md INSTRUCTIONS.md
-    rm -rf .opencode .cursor
-    echo "  (Kept: the slimmed CLAUDE.md, agent configs (.claude/, opencode.json), add-permission.sh,"
+if confirm "Remove the template scaffolding and finalize this as a clean app repo? Recommended."; then
+    Scripts/strip-scaffolding.sh "$APP"
+    echo "  (Kept: slimmed CLAUDE.md, agent configs (.claude/, opencode.json), add-permission.sh,"
     echo "         verify.sh, check-updates.sh, format.sh, release.sh, and docs/.)"
+else
+    log "Keeping scaffolding. CLAUDE.md still targets finalization; run Scripts/strip-scaffolding.sh \"$APP\" to slim it later."
 fi
 
 # --- Optional: fresh git history -----------------------------------------------------------------

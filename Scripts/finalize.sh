@@ -92,6 +92,20 @@ elif [[ "$DISTRIBUTION" != "direct" ]]; then
     exit 2
 fi
 
+# --- 5. Bare template repo name (AppleFactory -> app name) -----------------------------------
+# rename.sh only substitutes AppTemplate/com.example; the human-facing repo name "AppleFactory"
+# slips through into README, CONTRIBUTING, MAINTAINING, etc. Preserve NOTICE attribution.
+log "Replacing bare repo name: AppleFactory -> $APP"
+while IFS= read -r f; do
+    case "$f" in
+        ./NOTICE) continue ;;
+        ./Scripts/*) continue ;;
+        ./INSTRUCTIONS.md|./docs/FINALIZE.md) continue ;;
+        ./.opencode/*|./.cursor/*) continue ;;
+    esac
+    sed -i '' "s|AppleFactory|$APP|g" "$f"
+done < <(edit_files "AppleFactory")
+
 echo
 log "Finalization complete. Verify it builds:"
 echo "  swift build && swift test"
