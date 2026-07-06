@@ -29,7 +29,7 @@ sample code, and build a real app on top.
 - Add a permission (Info.plist + entitlement, from a baked-in table): `Scripts/add-permission.sh <permission> "<reason>"` (`--list` shows slugs)
 - One-command bootstrap (rebrand + verify + fresh git + push): `Scripts/setup.sh` (see [`INSTRUCTIONS.md`](INSTRUCTIONS.md))
 - Rebrand the template: `Scripts/rename.sh "MyApp" "com.myapp"`
-- Smoke-test the rebrand (rename + finalize build clean in a temp copy): `Scripts/test-rename.sh`
+- Smoke-test the rebrand (rename + finalize + strip in a temp copy, assert no dangling refs): `Scripts/test-rename.sh`
 - Format Swift (optional, not a gate): `Scripts/format.sh` (`--lint` to check only)
 - Ad-hoc release build: `bash Scripts/release.sh`
 
@@ -62,7 +62,8 @@ before finishing a task.
 - `Tests/AppTemplateTests` — Swift Testing suites for the app target (e.g. the `@MainActor` view model).
 - `Resources/` — `Info.plist`, `Entitlements.plist`, app icon for the hand-assembled `.app`.
 - `Scripts/` — `setup.sh` (one-command bootstrap), `rename.sh` (rebrand the template), `finalize.sh` (post-rename repo URL/category/
-  copyright/sandbox), `add-permission.sh` (Info.plist + entitlement from a table), `verify.sh`
+  copyright/sandbox), `strip-scaffolding.sh` (finalize cleanup: slim CLAUDE/AGENTS/README, remove scaffolding),
+  `add-permission.sh` (Info.plist + entitlement from a table), `verify.sh`
   (quiet build+test gate), `test-rename.sh` (rebrand smoke test), `format.sh` (optional Swift
   formatting), `check-updates.sh` (maintenance audit), and `release.sh` (distributable build).
 - `docs/` — architecture, development (recipes), releasing, getting started, maintaining, principles (design compass).

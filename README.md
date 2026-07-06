@@ -95,6 +95,7 @@ AppleFactory/
 ├── .github/                     # CI workflows, issue/PR templates, dependabot
 │   ├── workflows/build.yml      #   build + test + arm64-only verify
 │   ├── workflows/release.yml    #   sign + notarize + draft GitHub release (opt-in)
+│   ├── workflows/rebrand-smoke.yml #  rebrand + finalize + strip smoke test (finalize scaffolding)
 │   └── ISSUE_TEMPLATE/  PULL_REQUEST_TEMPLATE.md  dependabot.yml  CODEOWNERS
 ├── opencode.json  .claude/      # agent bash-permission allowlists (opencode / Claude Code)
 ├── .opencode/  .cursor/         # per-tool finalize entry points (point back to docs/FINALIZE.md)
@@ -102,9 +103,10 @@ AppleFactory/
 │   ├── setup.sh                 # one-command bootstrap: rebrand + verify + fresh git + push
 │   ├── rename.sh                # rebrand the template placeholders to your app name
 │   ├── finalize.sh              # post-rename: repo URL, category, copyright, sandbox
+│   ├── strip-scaffolding.sh     # finalize cleanup: slim CLAUDE/AGENTS/README, remove scaffolding
 │   ├── add-permission.sh        # add an NS*UsageDescription + entitlement from a baked-in table
 │   ├── verify.sh                # quiet build + release build + test gate
-│   ├── test-rename.sh           # smoke test: rename + finalize build clean in a temp copy
+│   ├── test-rename.sh           # smoke test: rename + finalize + strip build clean, assert no dangling refs
 │   ├── format.sh                # optional Swift formatting (swift format; not a CI gate)
 │   ├── check-updates.sh         # maintenance audit: deprecations, stale CI/actions, toolchain drift
 │   └── release.sh               # build → assemble .app → sign → notarize → dmg/zip + checksums
